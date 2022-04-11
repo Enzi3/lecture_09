@@ -28,18 +28,47 @@ def linear_search(data, number):
         if num == number:
             positions.append(idx)
             count += 1
-            number_count = {"index:": positions, "Pocet:": count}
+    number_count = {"index:": positions, "Pocet:": count}
     return number_count
+
+
+def pattern_search(sequence, pattern):
+    positions = set()
+    index = 0
+    while index < len(sequence) - len(pattern):
+        if sequence[index:index + len(pattern)] == pattern:
+            positions.add(index)
+        index = index + 1
+    return positions
+
+def binary_search(sequence, number):
+    left = 0
+    right = len(sequence) - 1
+    while left < right:
+        middle = (left + right) // 2
+        if sequence[middle] == number:
+            return middle
+        elif sequence[middle] < number:
+            left = middle +1
+        elif sequence[middle] > number:
+            right = middle - 1
+    return None
 
 
 
 def main():
     sequential_data = read_data("sequential.json", "unordered_numbers")
-    number_count = linear_search(sequential_data, number)
     print(sequential_data)
-    print(number_count)
+    print(linear_search(sequential_data, number))
+    linear_data = read_data("sequential.json", "dna_sequence")
+    print(linear_data)
+    print(pattern_search(linear_data, pattern))
+    ordered_numbers = read_data("sequential.json", "ordered_numbers")
+    print(binary_search(ordered_numbers, number))
+
 
 
 if __name__ == '__main__':
     number = 9
+    pattern = "GGT"
     main()
